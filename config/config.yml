@@ -1,0 +1,300 @@
+---
+# Container descriptor
+- descriptor: "pip-services:context-info:default:default:1.0"
+  name: "iqs-bundles-tenants-node"
+  description: "Microservice for deploying iqs tenants microservices"
+
+# Console logger
+- descriptor: "pip-services:logger:console:default:1.0"
+  level: "trace"
+
+# Performance counters that posts values to log
+- descriptor: "pip-services:counters:log:default:1.0"
+  level: "trace"
+
+# AWS logging component
+- descriptor: "pip-services:logger:cloudwatch:default:1.0"
+  level: "info"
+  group: "{{ENV_NAME}}"
+  connection:
+    region: "{{{AWS_REGION}}}"
+  credential:
+    access_id: "{{{AWS_ACCESS_ID}}}"
+    access_key: "{{{AWS_ACCESS_KEY}}}"
+
+# AWS metrics component
+- descriptor: "pip-services:counters:cloudwatch:default:1.0"
+  level: "info"
+  connection:
+    region: "{{{AWS_REGION}}}"
+  credential:
+    access_id: "{{{AWS_ACCESS_ID}}}"
+    access_key: "{{{AWS_ACCESS_KEY}}}"
+
+# Common HTTP endpoint
+- descriptor: "pip-services:endpoint:http:default:1.0"
+  connection:
+    protocol: "http"
+    host: "0.0.0.0"
+    port: 8080
+
+# Heartbeat service
+- descriptor: "pip-services:heartbeat-service:http:default:1.0"
+
+# Status service
+- descriptor: "pip-services:status-service:http:default:1.0"
+
+# Discovery service
+- descriptor: "pip-services:discovery:memory:default:*"
+  mongodb: "uri={{{MONGO_SERVICE_URI}}};host={{{MONGO_SERVICE_HOST}}};port={{{MONGO_SERVICE_PORT}}};database={{{MONGO_DB}}}"
+
+# Credential store
+- descriptor: "pip-services:credential-store:memory:default:*"
+  mongodb: "username={{{MONGO_USER}}};password={{{MONGO_PASS}}}"
+
+
+############## Pip.Services References ##############
+
+# Clusters component
+- descriptor: "iqs-services-clusters:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Message distribution component
+- descriptor: "pip-services-msgdistribution:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+
+############## Infrastructure components ##############
+
+# Logging components
+- descriptor: "pip-services-logging:persistence-messages:memory:default:*"
+- descriptor: "pip-services-logging:persistence-errors:memory:default:*"
+- descriptor: "pip-services-logging:controller:default:default:*"
+- descriptor: "pip-services-logging:client:direct:default:*"
+
+# Logging counters
+- descriptor: "pip-services-perfmon:persistence:memory:default:*"
+- descriptor: "pip-services-perfmon:controller:default:default:*"
+- descriptor: "pip-services-perfmon:client:direct:default:*"
+
+# Statistics components
+- descriptor: "pip-services-statistics:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "pip-services-statistics:controller:default:default:*"
+- descriptor: "pip-services-statistics:client:direct:default:*"
+- descriptor: "iqs-services-statistics:client:direct:default:*"
+
+
+############## iQs components ##############
+
+# Organizations component
+- descriptor: "iqs-services-organizations:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Control objects component
+- descriptor: "iqs-services-controlobjects:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Zones component
+- descriptor: "iqs-services-zones:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Eventrules component
+- descriptor: "iqs-services-eventrules:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Data profiles component
+- descriptor: "iqs-services-dataprofiles:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Devices component
+- descriptor: "iqs-services-devices:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Device profiles component
+- descriptor: "iqs-services-deviceprofiles:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+
+# Signals component
+- descriptor: "iqs-services-signals:client:http:default:*"
+  connection:
+    protocol: "http"
+    host: "{{{IQS_GROUPS_ROOT_SERVICE_HOST}}}"
+    port: {{IQS_GROUPS_ROOT_SERVICE_PORT}}
+  options:
+    connect_timeout: 10000
+    timeout: 10000
+    retries: 3
+  
+
+############## iQs realtime components ##############
+
+# Current object state components
+- descriptor: "iqs-services-currobjectstates:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-currobjectstates:controller:default:default:*"
+- descriptor: "iqs-services-currobjectstates:client:direct:default:*"
+
+# Current device state components
+- descriptor: "iqs-services-currdevicestates:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-currdevicestates:controller:default:default:*"
+- descriptor: "iqs-services-currdevicestates:client:direct:default:*"
+
+# Incident tracking components
+- descriptor: "iqs-services-incidents:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-incidents:controller:default:default:*"
+- descriptor: "iqs-services-incidents:client:direct:default:*"
+
+# Rosters components
+- descriptor: "iqs-services-rosters:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-rosters:controller:default:default:*"
+- descriptor: "iqs-services-rosters:client:direct:default:*"
+ 
+# Corrections components
+- descriptor: "iqs-services-corrections:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-corrections:controller:default:default:*"
+- descriptor: "iqs-services-corrections:client:direct:default:*"
+
+# Event generation components
+- descriptor: "iqs-services-eventgeneration:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-eventgeneration:controller:default:default:*"
+  message_templates:
+    event:
+      template: event
+- descriptor: "iqs-services-eventgeneration:client:direct:default:*"
+
+# Route analysis components
+- descriptor: "pip-services-routeanalysis:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "pip-services-routeanalysis:controller:default:default:*"
+- descriptor: "pip-services-routeanalysis:client:direct:default:*"
+
+# State updates components
+- descriptor: "iqs-services-stateupdates:controller:default:default:*"
+  options:
+    offline_check_interval: 300
+- descriptor: "iqs-services-stateupdates:client:direct:default:*"
+
+ 
+########### iQs historical components ###########
+
+# Operational events components
+- descriptor: "iqs-services-opevents:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-opevents:controller:default:default:*"
+- descriptor: "iqs-services-opevents:client:direct:default:*"
+
+# Object data components
+- descriptor: "pip-services-transducerdata:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "pip-services-transducerdata:controller:default:default:*"
+- descriptor: "pip-services-transducerdata:client:direct:default:*"
+
+# Object positions components
+- descriptor: "pip-services-positions:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "pip-services-positions:controller:default:default:*"
+- descriptor: "pip-services-positions:client:direct:default:*"
+
+# Object states components
+- descriptor: "iqs-services-objectstates:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-objectstates:controller:default:default:*"
+- descriptor: "iqs-services-objectstates:client:direct:default:*"
+
+# Object routes components
+- descriptor: "pip-services-routes:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "pip-services-routes:controller:default:default:*"
+- descriptor: "pip-services-routes:client:direct:default:*"
+
+# Attendance components
+- descriptor: "iqs-services-attendance:persistence:mongodb:default:*"
+  connection:
+    discovery_key: mongodb
+- descriptor: "iqs-services-attendance:controller:default:default:*"
+- descriptor: "iqs-services-attendance:client:direct:default:*"
+
+ 
+ 
