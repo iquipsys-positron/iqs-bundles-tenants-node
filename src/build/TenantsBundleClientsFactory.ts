@@ -21,18 +21,6 @@ import { RoutesClientFactory } from 'pip-clients-routes-node';
 import { AttendanceClientFactory } from 'iqs-clients-attendance-node';
 import { StatisticsClientFactory as OrganizationStatisticsClientFactory } from 'iqs-clients-statistics-node';
 
-import { ClustersClientFactory } from 'pip-clients-clusters-node';
-import { MessageDistributionClientFactory } from 'pip-clients-msgdistribution-node';
-import { OrganizationsClientFactory } from 'pip-clients-organizations-node';
-import { ControlObjectsClientFactory } from 'iqs-clients-controlobjects-node';
-import { ZonesClientFactory } from 'iqs-clients-zones-node';
-import { EventRulesClientFactory } from 'iqs-clients-eventrules-node';
-import { DataProfilesClientFactory } from 'iqs-clients-dataprofiles-node';
-import { DevicesClientFactory } from 'iqs-clients-devices-node';
-import { DeviceProfilesClientFactory } from 'iqs-clients-deviceprofiles-node';
-import { SignalsClientFactory } from 'iqs-clients-signals-node';
-
-
 export class TenantsBundleClientsFactory extends DefaultContainerFactory {
 
     public constructor() {
@@ -42,16 +30,6 @@ export class TenantsBundleClientsFactory extends DefaultContainerFactory {
         this.add(new PerfMonClientFactory);
         this.add(new StatisticsClientFactory);
 
-        this.add(new ClustersClientFactory);
-        this.add(new MessageDistributionClientFactory);
-        this.add(new OrganizationsClientFactory);
-        this.add(new ControlObjectsClientFactory);
-        this.add(new ZonesClientFactory);
-        this.add(new EventRulesClientFactory);
-        this.add(new DataProfilesClientFactory);
-        this.add(new DevicesClientFactory);
-        this.add(new DeviceProfilesClientFactory);
-        this.add(new SignalsClientFactory);
 
         this.add(new CurrentObjectStatesClientFactory);
         this.add(new CurrentDeviceStatesClientFactory);
